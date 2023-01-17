@@ -1,2 +1,2 @@
-ref/
-__pycache__/
+ref/*
+__pycache__/*
