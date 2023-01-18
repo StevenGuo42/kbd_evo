@@ -25,12 +25,12 @@ The key press rate, flexibility, and effectiveness of each finger are taken from
 [Figure 1: The ANSI keyboard layout with 5 rows](https://www.farah.cl/Keyboardery/Why-Do-Keycap-Sets-have-so-many-Copies-of-the-Backslash-Pipe-Key/)|[Figure 2: Workspace of a finger, red indicates the assumed workspace while typing](https://www.farah.cl/Keyboardery/Why-Do-Keycap-Sets-have-so-many-Copies-of-the-Backslash-Pipe-Key/)
 
 - Middle columns assigned to the index finger is penelized
-<!-->
+<!--
 - staggered keys are penalized based on the offset of the key and the hand orientation
 
 ![fig_hand](./img/kbd_hand.png)|![fig_stagger](./img/kbd_angle.png)
 -|-
 [Figure 3: hand orientation](https://fitforworksg.com/typing-and-ergonomics-what-is-important/)|Figure 4: offset angle of staggered keys
-<-->
+-->
 
 ## Cost Function
