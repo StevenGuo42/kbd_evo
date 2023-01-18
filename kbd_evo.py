@@ -153,36 +153,68 @@ class keybd:
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 class hand:
     # 0: pinky, 1: ring, 2: middle, 3: index,
+    def __init__(self, f, f_std):
+        self.fingers = f
+        self.fingers_std = f_std
+
+class hands2:
     def __init__(self):
-        self.L = None
-        self.R = None
+        self.LR = None
         
-        self.L_std = None
-        self.R_std = None
-        
-        # speed ratio between left and right hand
-        self.lr_ratio = None
-        
-        # leftward penalty of right index finger, or the other way around
-        self.i_side = None
-            
-    # initialize using data from paper (right handed)
+        self.init_paper_r()
+
     def init_paper_r(self):
+        # initialize using data from paper (right handed)
         # tapping rate data from paper (per 5s)
         # An Estimation of Finger-Tapping Rates and Load Capacities and the Effects of Various Factors
         # https://www.researchgate.net/publication/274641777_An_Estimation_of_Finger-Tapping_Rates_and_Load_Capacities_and_the_Effects_of_Various_Factors
-        self.L = np.array([17.2, 18.5, 19.6, 19.7])
-        self.R = np.array([19.7, 21.2, 21.9, 21.8])
+        L = np.array([17.2, 18.5, 19.6, 19.7])
+        R = np.array([19.7, 21.2, 21.9, 21.8])
         
-        self.L_std = np.array([4.1, 4.3, 4.3, 4.4])
-        self.R_std = np.array([4.9, 5.1, 5.3, 5.3])
+        L_std = np.array([4.1, 4.3, 4.3, 4.4])
+        R_std = np.array([4.9, 5.1, 5.3, 5.3])
         
+        self.LR = [hand(L, L_std), hand(R, R_std)]
+
+
         # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6704118/
         self.i_side = np.sqrt(6.9*4.8)/6.9 # 0.83
         
         self.rl_ratio = np.sum(self.R)/np.sum(self.L)
+
+# class hand:
+#     # 0: pinky, 1: ring, 2: middle, 3: index,
+#     def __init__(self):
+#         self.L = None
+#         self.R = None
         
+#         self.L_std = None
+#         self.R_std = None
         
+#         # speed ratio between left and right hand
+#         self.lr_ratio = None
+        
+#         # leftward penalty of right index finger, or the other way around
+#         self.i_side = None
+            
+#     # initialize using data from paper (right handed)
+#     def init_paper_r(self):
+#         # tapping rate data from paper (per 5s)
+#         # An Estimation of Finger-Tapping Rates and Load Capacities and the Effects of Various Factors
+#         # https://www.researchgate.net/publication/274641777_An_Estimation_of_Finger-Tapping_Rates_and_Load_Capacities_and_the_Effects_of_Various_Factors
+#         self.L = np.array([17.2, 18.5, 19.6, 19.7])
+#         self.R = np.array([19.7, 21.2, 21.9, 21.8])
+        
+#         self.L_std = np.array([4.1, 4.3, 4.3, 4.4])
+#         self.R_std = np.array([4.9, 5.1, 5.3, 5.3])
+        
+#         # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6704118/
+#         self.i_side = np.sqrt(6.9*4.8)/6.9 # 0.83
+        
+#         self.rl_ratio = np.sum(self.R)/np.sum(self.L)
+        
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
         
 class letter_stats:
     def __init__(self):
@@ -229,18 +261,23 @@ class evolution:
                                                  Defaults to [2, 3.5, 4.5, 5].
         """
         self.finger_strength = finger_strength# / np.linalg.norm(finger_strength)
+    
+    def init_mid_col(self, hands, factor = None):
+        if factor is None:
+             factor = 1/hands.rl_ratio
         
-    def cost(self, kbd, cost_type = 0):
-        """ cost of keyboard layout
-            1: distance to finger, weighted by finger strength
-            
+
+
+
+    def cost_2_hands(self, kbd, hand, cost_type = 0):       
+        """_summary_
+
         Args:
-            kbd (str): keyboard object
-            cost_type (int, optional): choose from a list of cost functions. Defaults to 0.
+            kbd (keybd object): keyboard object, includes coordinates of keys
+            hand (hands object): hand object, includes tapping rate of fingers
+            cost_type (int, optional): _description_. Defaults to 0.
         """
         
-    
-    
     
     
     
