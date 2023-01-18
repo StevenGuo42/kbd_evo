@@ -151,21 +151,7 @@ class keybd:
     
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# # ratio of tapping speed of dominant hand to non-dominant hand
-# # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4115982/
-# self.d_nd_ratio = 6.31/5.46
 class hand:
-    class finger:
-        def __init__(self, speed, flex, exten, i_side):
-            
-            # figners' speed, flexiblity, and extensibility
-            self.speed = speed
-            self.flex = flex
-            self.exten = exten
-            
-            # leftward flexiblity of right index finger, or the other way around
-            self.i_side = i_side
-            
     # 0: pinky, 1: ring, 2: middle, 3: index,
     def __init__(self):
         self.L = None
@@ -174,12 +160,46 @@ class hand:
         self.L_std = None
         self.R_std = None
         
+        # speed ratio between left and right hand
+        self.lr_ratio = None
         
-    def init_1(self):
+        # leftward penalty of right index finger, or the other way around
+        self.i_side = None
+            
+    # initialize using data from paper (right handed)
+    def init_paper_r(self):
+        # tapping rate data from paper (per 5s)
+        # An Estimation of Finger-Tapping Rates and Load Capacities and the Effects of Various Factors
+        # https://www.researchgate.net/publication/274641777_An_Estimation_of_Finger-Tapping_Rates_and_Load_Capacities_and_the_Effects_of_Various_Factors
+        self.L = np.array([17.2, 18.5, 19.6, 19.7])
+        self.R = np.array([19.7, 21.2, 21.9, 21.8])
         
-        pass
+        self.L_std = np.array([4.1, 4.3, 4.3, 4.4])
+        self.R_std = np.array([4.9, 5.1, 5.3, 5.3])
+        
+        # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6704118/
+        self.i_side = np.sqrt(6.9*4.8)/6.9 # 0.83
+        
+        self.rl_ratio = np.sum(self.R)/np.sum(self.L)
         
         
+        
+class letter_stats:
+    def __init__(self):
+        self.letters = None
+        self.freq = None
+        
+    def init(self):
+        letters26 = [chr(i) for i in range(65, 91)]
+        self.letters = np.array(['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 
+                                 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', 
+                                 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '.', ',', '/'])
+
+        freq26 = np.array([8.167, 1.492, 2.782, 4.253, 12.702, 2.228, 2.015, 6.094, 6.966, 
+                           0.153, 0.772, 4.025, 2.406, 6.749, 7.507, 1.929, 0.095, 5.987, 
+                           6.327, 9.056, 2.758, 0.978, 2.360, 0.150, 1.974, 0.074])/100
+        
+        freq_punc = 
 
     
 
